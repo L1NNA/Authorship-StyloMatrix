@@ -1,0 +1,38 @@
+name: Build and Release Stylometric JAR
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          lfs: true
+      - name: Set up JDK 13
+        uses: actions/setup-java@v1
+        with:
+          java-version: 13
+      #     this is the jar we built locally (not the lastest)
+      #     (now we switch to download the latest ghidra release and build the single jar. see code below.)
+      #     - name: download dependencies
+      #       run: wget -q https://github.com/L1NNA/JARV1S-Ghidra/releases/download/ghidra-jar/ghidra-1.0.jar -P lib/nsa/ghidra/1.0/
+      - name: package
+        run: |
+          mvn install:install-file -Dfile=${basedir}/lib/GreekTagger-0.0.1.jar -DgroupId=local -DartifactId=greek-tagger -Dversion=0.0.1 -Dpackaging=jar
+          mvn install:install-file -Dfile=${basedir}/lib/hunspell.jar -DgroupId=local -DartifactId=hunspell -Dversion=0.0.1 -Dpackaging=jar
+          mvn install:install-file -Dfile=${basedir}/lib/auc.jar -DgroupId=local -DartifactId=auc -Dversion=0.0.1 -Dpackaging=jar
+          mvn --no-transfer-progress package
+      - name: Upload to release
+        uses: L1NNA/github-release@master
+        with:
+          tag: v0.0.1
+          files: target/authorship-0.0.1-SNAPSHOT-jar-with-dependencies.jar stylomatrix-0.0.1.jar
+          gzip: false
+          body: latest jar built
+          token: ${{ secrets.GITHUB_TOKEN }}
+          allow_override: true

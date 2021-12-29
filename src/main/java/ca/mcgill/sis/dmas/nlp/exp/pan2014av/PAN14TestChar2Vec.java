@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ForkJoinPool;
 import java.util.function.Supplier;
 
+import org.apache.logging.log4j.simple.SimpleLogger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +32,8 @@ public class PAN14TestChar2Vec {
 		test();
 	}
 
-	public static TestEntry<C2VParam> test(PAN2014AV2 ds, C2VParam param, String testCase, String cacheFile) {
+	public static TestEntry<C2VParam> test(
+			PAN2014AV2 ds, C2VParam param, String testCase, String cacheFile) {
 
 		LearnerChar2VecEmbedding p2v = new LearnerChar2VecEmbedding(param);
 		p2v.debug = false;

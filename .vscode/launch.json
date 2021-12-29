@@ -1,0 +1,260 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch ArgumentParser",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.env.ArgumentParser",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch Lines",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.io.Lines",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch LinesFiltered",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.io.LinesFiltered",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch LibLINEAR",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.io.arff.LibLINEAR",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch DmasCollectionOperations",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.io.collection.DmasCollectionOperations",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch EntryPair",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.io.collection.EntryPair",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch IterableRepeat",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.io.collection.IterableRepeat",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch IteratorSafeGen",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.io.collection.IteratorSafeGen",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch SentencesFiltered",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.corpus.SentencesFiltered",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch SerializedStreamReader",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.corpus.io.twitter.crawler.SerializedStreamReader",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch Tester",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.corpus.io.twitter.crawler.Tester",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch TweetCorpusDownloader",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.corpus.io.twitter.crawler.TweetCorpusDownloader",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch TweetFieldsResponse",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.corpus.io.twitter.crawler.TweetFieldsResponse",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch ParserOpenNLP",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.corpus.parser.ParserOpenNLP",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch ParserStandford",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.corpus.parser.ParserStandford",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch ParserStandfordNeural",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.corpus.parser.ParserStandfordNeural",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch GeneralText",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.exp.GeneralText",
+            "projectName": "authorship",
+            "args": ["test", "char2vec", "nlps"]
+        },
+        {
+            "type": "java",
+            "name": "Launch ICWSM2012",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.exp.icwsm2012.ICWSM2012",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch IMDB62",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.exp.imdb.IMDB62",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch PAN2013AP",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.exp.pan2013ap.PAN2013AP",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch PAN14TestChar2Vec",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.exp.pan2014av.PAN14TestChar2Vec",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch PAN14TestPos2Vec",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.exp.pan2014av.PAN14TestPos2Vec",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch PAN14TestTopicLexic2Vec",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.exp.pan2014av.PAN14TestTopicLexic2Vec",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch PAN2014AV2",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.exp.pan2014av.PAN2014AV2",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch ContextGeneratorCBOW",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.model.astyle.ContextGeneratorCBOW",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch RandL",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.model.astyle.RandL",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch WordEmbeddingChecker",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.model.astyle.WordEmbeddingChecker",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch POSTransform",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.model.astyle._3_syntactic.POSTransform",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch MapDBTest",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.model.astyle._4_stylometricBasic.MapDBTest",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch LatentSemanticIndex",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.model.astyle._6_LSA.LatentSemanticIndex",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch TypedNgram",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.model.astyle._7_typedNgram.TypedNgram",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch Pan16Mart",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.model.astyle._8_pan16.Pan16Mart",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch Pan16Pashutan",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.model.astyle._8_pan16.Pan16Pashutan",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch TokenCounter",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.nlp.model.embedding.TokenCounter",
+            "projectName": "authorship"
+        },
+        {
+            "type": "java",
+            "name": "Launch Blas",
+            "request": "launch",
+            "mainClass": "ca.mcgill.sis.dmas.utils.blass.Blas",
+            "projectName": "authorship"
+        }
+    ]
+}

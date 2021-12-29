@@ -35,7 +35,7 @@ public class IterableBatch<T> implements Iterable<ArrayList<T>> {
 		if (repeatingTimes > 1)
 			repeat = repeatingTimes;
 	}
-	
+
 	public IterableBatch(Iterable<T> ite_, int groupSize_, int repeatingTimes, Consumer<Integer> repeatHook) {
 		ite = ite_;
 		groupSize = groupSize_;
@@ -67,23 +67,23 @@ public class IterableBatch<T> implements Iterable<ArrayList<T>> {
 			if (hasNEXT)
 				return true;
 			else if (currentRound < repeat) {
-				if(repeatHook!=null)
+				if (repeatHook != null)
 					repeatHook.accept(currentRound);
 				currentRound++;
 				linesIterator = ite.iterator();
 				if (linesIterator == null) {
-					logger.error("Failed to repeat iterator");
+					// logger.error("Failed to repeat iterator");
 					return false;
 				}
 				hasNEXT = linesIterator.hasNext();
 				if (hasNEXT)
 					return true;
 				else {
-					logger.error("Failed to repeat iterator");
+					// logger.error("Failed to repeat iterator");
 					return false;
 				}
 			} else {
-				if(repeatHook!=null)
+				if (repeatHook != null)
 					repeatHook.accept(currentRound);
 				return false;
 			}
@@ -106,57 +106,57 @@ public class IterableBatch<T> implements Iterable<ArrayList<T>> {
 
 	}
 
-//	public static void main(String[] args) throws Exception {
-//		DmasApplication.contextualize("D:\\dataset\\CIKM\\");
-//
-//		// test sentences
-//		Sentences sentences = CIKM2014QueryDataset.testingData("test.text");
-//		System.out.println(DmasCollectionOperations.count(sentences));
-//
-//		// test batch mode
-//		IterableBatch<Sentence> ib = new IterableBatch<>(sentences, 500);
-//		int count = 0;
-//		for (ArrayList<Sentence> arrayList : ib) {
-//			count += arrayList.size();
-//		}
-//		System.out.println(count);
-//
-//		// test iterative batch mode
-//		ib = new IterableBatch<>(sentences, 123, 1);
-//		count = 0;
-//		for (ArrayList<Sentence> arrayList : ib) {
-//			count += arrayList.size();
-//		}
-//		System.out.println(count);
-//
-//		// test thread safe mode
-//		final IteratorSafeGen<Sentence> safeSentences = new IteratorSafeGen<>(
-//				ib);
-//
-//		int numThreads = 5;
-//		Pool pool = new Pool(numThreads);
-//		final long[] counters = new long[5];
-//		Arrays.fill(counters, 0);
-//
-//		for (int i = 0; i < 5; i++) {
-//
-//			final int index = i;
-//			pool.submit(new Task() {
-//				@Override
-//				public void run() throws Exception {
-//					counters[index] = DmasCollectionOperations
-//							.count(safeSentences.subIterable());
-//				}
-//			});
-//		}
-//		
-//		pool.waiteForCompletion();
-//
-//		long sum = 0;
-//		for (int i = 0; i < counters.length; ++i) {
-//			sum += counters[i];
-//		}
-//		System.out.println(sum);
-//
-//	}
+	// public static void main(String[] args) throws Exception {
+	// DmasApplication.contextualize("D:\\dataset\\CIKM\\");
+	//
+	// // test sentences
+	// Sentences sentences = CIKM2014QueryDataset.testingData("test.text");
+	// System.out.println(DmasCollectionOperations.count(sentences));
+	//
+	// // test batch mode
+	// IterableBatch<Sentence> ib = new IterableBatch<>(sentences, 500);
+	// int count = 0;
+	// for (ArrayList<Sentence> arrayList : ib) {
+	// count += arrayList.size();
+	// }
+	// System.out.println(count);
+	//
+	// // test iterative batch mode
+	// ib = new IterableBatch<>(sentences, 123, 1);
+	// count = 0;
+	// for (ArrayList<Sentence> arrayList : ib) {
+	// count += arrayList.size();
+	// }
+	// System.out.println(count);
+	//
+	// // test thread safe mode
+	// final IteratorSafeGen<Sentence> safeSentences = new IteratorSafeGen<>(
+	// ib);
+	//
+	// int numThreads = 5;
+	// Pool pool = new Pool(numThreads);
+	// final long[] counters = new long[5];
+	// Arrays.fill(counters, 0);
+	//
+	// for (int i = 0; i < 5; i++) {
+	//
+	// final int index = i;
+	// pool.submit(new Task() {
+	// @Override
+	// public void run() throws Exception {
+	// counters[index] = DmasCollectionOperations
+	// .count(safeSentences.subIterable());
+	// }
+	// });
+	// }
+	//
+	// pool.waiteForCompletion();
+	//
+	// long sum = 0;
+	// for (int i = 0; i < counters.length; ++i) {
+	// sum += counters[i];
+	// }
+	// System.out.println(sum);
+	//
+	// }
 }
