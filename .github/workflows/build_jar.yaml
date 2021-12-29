@@ -23,9 +23,9 @@ jobs:
       #       run: wget -q https://github.com/L1NNA/JARV1S-Ghidra/releases/download/ghidra-jar/ghidra-1.0.jar -P lib/nsa/ghidra/1.0/
       - name: package
         run: |
-          mvn install:install-file -Dfile=${basedir}/lib/GreekTagger-0.0.1.jar -DgroupId=local -DartifactId=greek-tagger -Dversion=0.0.1 -Dpackaging=jar
-          mvn install:install-file -Dfile=${basedir}/lib/hunspell.jar -DgroupId=local -DartifactId=hunspell -Dversion=0.0.1 -Dpackaging=jar
-          mvn install:install-file -Dfile=${basedir}/lib/auc.jar -DgroupId=local -DartifactId=auc -Dversion=0.0.1 -Dpackaging=jar
+          mvn install:install-file -Dfile=${basedir}lib/GreekTagger-0.0.1.jar -DgroupId=local -DartifactId=greek-tagger -Dversion=0.0.1 -Dpackaging=jar
+          mvn install:install-file -Dfile=${basedir}lib/hunspell.jar -DgroupId=local -DartifactId=hunspell -Dversion=0.0.1 -Dpackaging=jar
+          mvn install:install-file -Dfile=${basedir}lib/auc.jar -DgroupId=local -DartifactId=auc -Dversion=0.0.1 -Dpackaging=jar
           mvn --no-transfer-progress package
       - name: Upload to release
         uses: L1NNA/github-release@master
