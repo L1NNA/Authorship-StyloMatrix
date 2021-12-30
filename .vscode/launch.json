@@ -128,7 +128,7 @@
             "request": "launch",
             "mainClass": "ca.mcgill.sis.dmas.nlp.exp.GeneralText",
             "projectName": "authorship",
-            "args": ["test", "char2vec", "nlps"]
+            "args": ["test", "stylometric", "nlps"]
         },
         {
             "type": "java",

@@ -6,13 +6,13 @@ import org.slf4j.LoggerFactory;
 import ca.mcgill.sis.dmas.nlp.corpus.parser.Tagger.Language;
 import ca.mcgill.sis.dmas.nlp.corpus.preprocess.Preprocessor;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -43,9 +43,17 @@ import ca.mcgill.sis.dmas.nlp.corpus.parser.Tagger;
 import ca.mcgill.sis.dmas.nlp.corpus.parser.Tokenizer;
 import ca.mcgill.sis.dmas.nlp.model.astyle.Document;
 import ca.mcgill.sis.dmas.nlp.model.astyle.MathUtilities;
+import ca.mcgill.sis.dmas.nlp.model.astyle._1_lexical.LearnerTL2VecEmbedding3;
+import ca.mcgill.sis.dmas.nlp.model.astyle._1_lexical.LearnerTL2VecEmbedding.TL2VParam;
+import ca.mcgill.sis.dmas.nlp.model.astyle._1_lexical.LearnerTL2VecEmbedding.TLEmbedding;
 import ca.mcgill.sis.dmas.nlp.model.astyle._2_character.LearnerChar2VecEmbedding;
 import ca.mcgill.sis.dmas.nlp.model.astyle._2_character.LearnerChar2VecEmbedding.C2VParam;
 import ca.mcgill.sis.dmas.nlp.model.astyle._2_character.LearnerChar2VecEmbedding.CEmbedding;
+import ca.mcgill.sis.dmas.nlp.model.astyle._3_syntactic.LearnerSyn2VecEmbedding2;
+import ca.mcgill.sis.dmas.nlp.model.astyle._3_syntactic.LearnerSyn2VecEmbedding.S2VParam;
+import ca.mcgill.sis.dmas.nlp.model.astyle._3_syntactic.LearnerSyn2VecEmbedding.SEmbedding;
+import ca.mcgill.sis.dmas.nlp.model.astyle._4_stylometricBasic.Stylometric;
+import ca.mcgill.sis.dmas.nlp.model.astyle._4_stylometricBasic.Stylometric.StylometricParam;
 
 public class GeneralText {
     private static Logger logger = LoggerFactory.getLogger(GeneralText.class);
@@ -63,9 +71,11 @@ public class GeneralText {
 
         List<Document> docs_training = LoadDocuments(training_folder, preprocessor, tagger);
         List<Document> docs_testing = LoadDocuments(testing_folder, preprocessor, tagger);
+        HashMap<String, Map<String, double[]>> training_embeddings = new HashMap<>();
+        HashMap<String, Map<String, double[]>> testing_embeddings = new HashMap<>();
 
         if (method.equals("char2vec")) {
-            logger.info("Training...");
+            logger.info("Training char2vec ...");
             C2VParam param = new C2VParam();
             param.optm_parallelism = Runtime.getRuntime().availableProcessors();
             param.optm_aphaUpdateInterval = -1;
@@ -73,14 +83,82 @@ public class GeneralText {
             LearnerChar2VecEmbedding p2v = new LearnerChar2VecEmbedding(param);
             p2v.debug = false;
             p2v.train(docs_training);
-            logger.info("Infering");
-            CEmbedding embd_training = p2v.produceDocEmbd();
-            CEmbedding embd_testing = p2v.infer(docs_testing);
-            ObjectMapper om = new ObjectMapper();
-            om.writeValue(new File(args[0] + "/e_train.json"), embd_training.charEmbedding);
-            om.writeValue(new File(args[0] + "/e_test.json"), embd_testing.charEmbedding);
+            logger.info("Inferring");
+            training_embeddings.put(
+                "character", 
+                MathUtilities.normalize(p2v.produceDocEmbd().charEmbedding)
+                );
+            testing_embeddings.put(
+                "character", 
+                MathUtilities.normalize(p2v.infer(docs_testing).charEmbedding)
+                );
+        } else if (method.equals("tl2vec")) {
+            logger.info("Training tl2vec...");
+            TL2VParam param = new TL2VParam();
+            param.optm_parallelism = Runtime.getRuntime().availableProcessors();
+            param.optm_aphaUpdateInterval = -1;
+            MathUtilities.createExpTable();
+            LearnerTL2VecEmbedding3 p2v = new LearnerTL2VecEmbedding3(param);
+            p2v.debug = false;
+            p2v.train(docs_training);
+            logger.info("Inferring");
+            TLEmbedding train_embd = p2v.produceDocEmbdUnnormalized();
+            TLEmbedding test_embd = p2v.inferUnnormalized(docs_testing);
+            training_embeddings.put(
+                "lexical", 
+                MathUtilities.normalize(train_embd.lexicEmbedding)
+                );
+            testing_embeddings.put(
+                "lexical", 
+                MathUtilities.normalize(test_embd.lexicEmbedding)
+                );
+
+            training_embeddings.put(
+                "topical", 
+                MathUtilities.normalize(train_embd.topicEmbedding)
+                );
+            testing_embeddings.put(
+                "topical", 
+                MathUtilities.normalize(test_embd.topicEmbedding)
+                );
+        }else if (method.equals("pos2vec")){
+            logger.info("Training pos2vec...");
+            S2VParam param = new S2VParam();
+            param.optm_parallelism = Runtime.getRuntime().availableProcessors();
+            param.optm_aphaUpdateInterval = -1;
+            MathUtilities.createExpTable();
+            LearnerSyn2VecEmbedding2 p2v = new LearnerSyn2VecEmbedding2(param);
+            p2v.train(docs_training);
+            logger.info("Inferring");
+            training_embeddings.put(
+                "syntatic", 
+                MathUtilities.normalize(p2v.produceDocEmbd().synEmbedding)
+                );
+            testing_embeddings.put(
+                "syntatic", 
+                MathUtilities.normalize(p2v.infer(docs_testing).synEmbedding)
+                );
+        }else if (method.equals("stylometric")){
+            logger.info("Training pos2vec...");
+            StylometricParam param = new StylometricParam();
+            MathUtilities.createExpTable();
+            Stylometric sty = new Stylometric(param);
+            sty.train(docs_training);
+
+            logger.info("Inferring");
+            training_embeddings.put(
+                "stylometric", 
+                MathUtilities.normalize(sty.getDocEmbedding())
+                );
+            testing_embeddings.put(
+                "stylometric", 
+                MathUtilities.normalize(sty.inferNewDocEmbedding(docs_testing))
+                );
         }
 
+        ObjectMapper om = new ObjectMapper();
+        om.writeValue(new File(args[0] + "/e_train.json"), training_embeddings);
+        om.writeValue(new File(args[0] + "/e_test.json"), testing_embeddings);
     }
 
     public static List<Document> LoadDocuments(File root, Preprocessor preprocessor, Tagger tagger) {
@@ -89,7 +167,7 @@ public class GeneralText {
         Stream<Document> allDocStream = Arrays.stream(root.listFiles()).filter(file -> file.isFile())
                 .map(file -> {
                     Document knownDoc = new Document();
-                    knownDoc.id = file.getName();
+                    knownDoc.id = root.getName() + "_" + file.getName();
                     ArrayList<String> knLines = new ArrayList<>();
                     try {
                         String line = Lines.readAll(file.getAbsolutePath(), Charsets.UTF_8, false);
