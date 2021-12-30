@@ -27,12 +27,12 @@ jobs:
           mvn install:install-file -Dfile=${basedir}lib/hunspell.jar -DgroupId=local -DartifactId=hunspell -Dversion=0.0.1 -Dpackaging=jar
           mvn install:install-file -Dfile=${basedir}lib/auc.jar -DgroupId=local -DartifactId=auc -Dversion=0.0.1 -Dpackaging=jar
           mvn --no-transfer-progress package
-      - name: Upload to release
-        uses: L1NNA/github-release@master
+      - name: Upload jar to release
+        uses: svenstaro/upload-release-action@v2
         with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: target/authorship-0.0.1-SNAPSHOT-jar-with-dependencies.jar
+          asset_name: authorship-0.0.1-SNAPSHOT-jar-with-dependencies.jar
           tag: v0.0.1
-          files: target/authorship-0.0.1-SNAPSHOT-jar-with-dependencies.jar
-          gzip: false
-          body: latest jar built
-          token: ${{ secrets.GITHUB_TOKEN }}
-          allow_override: true
+          overwrite: true
+          body: "latest jar build"
